@@ -11,19 +11,15 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    email: String,
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true, minlength: 8 },
     role: {
       type: String,
       enum: ["Admin", "User"],
     },
-    //   refreshTokens: [
-    //     {
-    //       token: {
-    //         type: String,
-    //       },
-    //     },
-    //   ],
+
+    googleId: String,
   },
   { timestamps: true }
 );

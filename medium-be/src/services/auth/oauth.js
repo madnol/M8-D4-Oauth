@@ -3,8 +3,6 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const UserModel = require("../users/schema");
 const { authenticate } = require("./tools");
 
-console.log(process.env.GOOGLE_ID);
-
 passport.use(
   "google",
   new GoogleStrategy(
@@ -14,6 +12,7 @@ passport.use(
       callbackURL: "http://localhost:3001/users/googleRedirect",
     },
     async (request, accessToken, refreshToken, profile, next) => {
+      console.log(profile);
       const newUser = {
         googleId: profile.id,
         name: profile.name.givenName,
@@ -25,15 +24,26 @@ passport.use(
 
       try {
         const user = await UserModel.findOne({ googleId: profile.id });
+        console.log(user);
+        if (!user) {
+          //check if exist
+          const createdUser = new UserModel({
+            googleId: profile.id,
+            firstname: profile.name.familyName,
+            lastname: profile.givenName,
+            email: profile.emails[0].value,
+            role: "User",
+          });
+          //   await createdUser.save();
+          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+          console.log(createdUser);
+          const tokens = await authenticate(createdUser);
 
-        if (user) {
+          next(null, { user: createdUser, tokens });
+        } else {
+          //if not exist generate tokens
           const tokens = await authenticate(user);
           next(null, { user, tokens });
-        } else {
-          const createdUser = new UserModel(newUser);
-          await createdUser.save();
-          const tokens = await authenticate(createdUser);
-          next(null, { user: createdUser, tokens });
         }
       } catch (error) {
         next(error);
