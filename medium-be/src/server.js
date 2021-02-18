@@ -3,7 +3,11 @@ const listEndpoints = require("express-list-endpoints");
 const { join } = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
+//*PASSPORT
+const passport = require("passport");
+const oauth = require("./services/auth/oauth");
 
+//*ROUTER
 const articlesRouter = require("./services/articles");
 const reviewsRouter = require("./services/reviews");
 const authorRouter = require("./services/authors");
@@ -34,12 +38,13 @@ var corsOptions = {
 
 //MIDDLEWARES
 server.use(cors());
-//ROUTES
 server.use(express.json());
+server.use(passport.initialize());
+//ROUTES
 server.use("/articles", articlesRouter);
 server.use("/reviews", reviewsRouter);
 server.use("/authors", authorRouter);
-server.use("/user", userRouter);
+server.use("/users", userRouter);
 
 //ERROR HANDLERS
 server.use(notFoundErrorHandler);

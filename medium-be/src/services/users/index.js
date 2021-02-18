@@ -1,5 +1,6 @@
 const express = require("express");
 const UserModel = require("./schema");
+const passport = require("passport");
 
 //*from auth Tools
 const { authenticate } = require("../auth/tools");
@@ -77,5 +78,30 @@ usersRouter.delete("/me", async (req, res, next) => {
     next(error);
   }
 });
+
+usersRouter.get(
+  "/googleLogin",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+usersRouter.get(
+  "/googleRedirect",
+  passport.authenticate("google"),
+  async (req, res, next) => {
+    try {
+      res.cookie("accessToken", req.user.tokens.accessToken, {
+        httpOnly: true,
+      });
+      res.cookie("refreshToken", req.user.tokens.refreshToken, {
+        httpOnly: true,
+        path: "/users/refreshToken",
+      });
+
+      res.status(200).redirect("http://localhost:3000/");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = usersRouter;
