@@ -1,0 +1,82 @@
+.SignUp__container {
+  position: relative;
+  height: 100vh;
+
+  .SignUp__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 20rem;
+    padding: 30px;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    .SignUp__button {
+      //   border-radius: 50px;
+      //   padding: 1rem 2rem;
+      width: 100%;
+      padding: 0.5em 2em;
+
+      box-shadow: 0 10px 30px 10px rgba(114, 116, 253, 0.5);
+      background-color: #7274fd !important;
+      border: none;
+      transition: background-color 0.2s;
+      &:hover {
+        background-color: rgb(76, 78, 196) !important;
+      }
+    }
+  }
+
+  .SignUp__balls1 {
+    background-image: linear-gradient(135deg, #a0faee 10%, #aaa7fd 100%);
+
+    opacity: 0.5;
+    box-shadow: 10px 10px 30px 10px rgba(114, 112, 253, 0.3);
+    padding: 50px;
+    height: 104px;
+    width: 104px;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-194%, -206%);
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .SignUp__balls2 {
+    background-image: linear-gradient(135deg, #a0faee 10%, #aaa7fd 100%);
+    box-shadow: 10px 10px 30px 10px rgba(114, 112, 253, 0.3);
+    height: 139px;
+    width: 139px;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(51%, -100%);
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .SignUp__balls3 {
+    background-image: linear-gradient(135deg, #a0faee 10%, #aaa7fd 100%);
+    box-shadow: 10px 10px 30px 10px rgba(114, 112, 253, 0.3);
+    transform: translate(-168%, -38%);
+    height: 120px;
+    width: 120px;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+
+    border-radius: 50%;
+    position: absolute;
+  }
+}
