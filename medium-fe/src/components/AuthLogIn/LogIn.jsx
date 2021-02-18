@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 //*STYLE
 import "./styles.scss";
 
+import GoogleButton from "react-google-button";
+
 const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,6 +51,12 @@ const LogIn = () => {
             <Button onClick={login} className="LogIn__button" type="submit">
               SIGN IN
             </Button>
+            <GoogleButton
+              className="LogIn__button mt-3 border rounded"
+              onClick={() => {
+                console.log("Google button clicked");
+              }}
+            />
           </Form>
         </animated.div>
         <div className="LogIn__balls1"></div>

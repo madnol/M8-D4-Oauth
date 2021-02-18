@@ -5,22 +5,30 @@ const UserSchema = new Schema(
   {
     firstname: {
       type: String,
-      required: true,
+      // required: true,
     },
     lastname: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: String,
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true, minlength: 8 },
+    username: {
+      type: String,
+      //  required: true, unique: true
+    },
+    password: {
+      type: String,
+      // required: true, minlength: 8
+    },
     role: {
       type: String,
       enum: ["Admin", "User"],
     },
 
     googleId: String,
+    // refreshTokens: [{ token: String }],
   },
+
   { timestamps: true }
 );
 

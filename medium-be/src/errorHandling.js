@@ -28,6 +28,7 @@ const badRequestErrorHandler = (err, req, res, next) => {
 
 const catchAllErrorHandler = (err, req, res, next) => {
   if (!res.headersSent) {
+    console.log(err);
     res.status(500).send("Generic Server Error!");
   }
 };

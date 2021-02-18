@@ -97,9 +97,9 @@ usersRouter.get(
       //   path: "/users/refreshToken",
       // });
 
-      res
-        .status(200)
-        .redirect("http://localhost:3000/" + "?accessToken=" + accessToken);
+      res.redirect(
+        "http://localhost:3000/" + "?accessToken=" + req.user.tokens
+      );
     } catch (error) {
       next(error);
     }

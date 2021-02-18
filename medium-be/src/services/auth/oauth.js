@@ -15,43 +15,38 @@ passport.use(
       console.log(profile);
       const newUser = {
         googleId: profile.id,
-        name: profile.name.givenName,
-        surname: profile.name.familyName,
+        firstname: profile.name.givenName,
+        lastname: profile.name.familyName,
         email: profile.emails[0].value,
         role: "User",
-        refreshTokens: [],
+        // refreshTokens: [],
       };
 
+      //*CHECK IF GOOGLE USER EXISTS
       try {
         const user = await UserModel.findOne({ googleId: profile.id });
         console.log(user);
-        if (!user) {
-          //check if exist
-          const createdUser = new UserModel({
-            googleId: profile.id,
-            firstname: profile.name.familyName,
-            lastname: profile.givenName,
-            email: profile.emails[0].value,
-            role: "User",
-          });
-          //   await createdUser.save();
-          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-          console.log(createdUser);
-          const tokens = await authenticate(createdUser);
+        //if google user exist, generate tokens
 
-          next(null, { user: createdUser, tokens });
-        } else {
-          //if not exist generate tokens
+        if (user) {
+          //check if exist
           const tokens = await authenticate(user);
-          next(null, { user, tokens });
+          next(null, { user, tokens }); //first param is dedicated for error
+        } else {
+          //take tha newUser
+          const createdUser = await UserModel(newUser);
+          await createdUser.save();
+          const tokens = await authenticate(createdUser);
+          next(null, { user: createdUser, tokens });
         }
       } catch (error) {
+        console.log(error);
         next(error);
       }
     }
   )
 );
 
-passport.serializeUser(function (user, text) {
+passport.serializeUser(function (user, next) {
   next(null, user);
 });
